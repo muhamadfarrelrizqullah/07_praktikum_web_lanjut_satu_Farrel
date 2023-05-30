@@ -42,6 +42,7 @@ class MahasiswaController extends Controller
         $request->validate([ 
             'Nim' => 'required', 
             'Nama' => 'required', 
+            'foto' => 'image|file',
             'kelas_id' => 'required', 
             'Jurusan' => 'required', 
             'No_Handphone' => 'required', 
@@ -50,10 +51,16 @@ class MahasiswaController extends Controller
         ]);
 
         // Mahasiswa::create($request->all());
+        if ($request->file('foto')) {
+            $nama_foto = $request->file('foto')->store('fotoMahasiswa', 'public');
+        } else {
+            dd('Foto Tidak ada');
+        }
 
         $mahasiswa = new Mahasiswa;
         $mahasiswa->nim = $request->get('Nim');
         $mahasiswa->nama = $request->get('Nama');
+        $mahasiswa->foto = $nama_foto;
         $mahasiswa->jurusan = $request->get('Jurusan');
         $mahasiswa->no_handphone = $request->get('No_Handphone');
         $mahasiswa->email = $request->get('Email');
@@ -98,21 +105,30 @@ class MahasiswaController extends Controller
      */
     public function update(Request $request, string $Nim)
     {
+        // dd($request);
         $validateData = $request->validate([ 
             'Nim' => 'required', 
             'Nama' => 'required', 
+            'foto' => 'image|file',
             'Kelas' => 'required', 
             'Jurusan' => 'required', 
             'No_Handphone' => 'required', 
             'Email' => 'required',
             'Tanggal_Lahir' => 'required',
         ]);
+        //  dd($request);
 
         // Mahasiswa::where('Nim', $Nim)->update($validateData);
+        if ($request->foto && file_exists(storage_path('app/public/' . $request->foto))) {
+            Storage::delete('public/' . $request->foto);
+        }
+
+        $nama_foto = $request->file('foto')->store('fotoMahasiswa', 'public');
 
         $mahasiswa = Mahasiswa::with('kelas')->where('nim', $Nim)->first();
         $mahasiswa->nim = $request->get('Nim');
         $mahasiswa->nama = $request->get('Nama');
+        $mahasiswa->foto = $nama_foto;
         $mahasiswa->jurusan = $request->get('Jurusan');
         $mahasiswa->no_handphone = $request->get('No_Handphone');
         $mahasiswa->email = $request->get('Email');

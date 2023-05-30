@@ -27,6 +27,7 @@
         <tr>
             <th>Nim</th>
             <th>Nama</th>
+            <th>Foto</th>
             <th>Kelas</th>
             <th>Jurusan</th>
             <th>No_Handphone</th>
@@ -38,16 +39,18 @@
             <tr>
                 <td>{{ $Mahasiswa->Nim }}</td>
                 <td>{{ $Mahasiswa->Nama }}</td>
+                <td><img width="100px" height="100px" src="{{ asset('storage/' . $Mahasiswa->foto) }}"
+                        style="object-fit: cover"></td>
                 <td>{{ $Mahasiswa->Kelas->nama_kelas }}</td>
                 <td>{{ $Mahasiswa->Jurusan }}</td>
                 <td>{{ $Mahasiswa->No_Handphone }}</td>
                 <td>{{ $Mahasiswa->Email }}</td>
                 <td>{{ $Mahasiswa->Tanggal_Lahir }}</td>
                 <td>
-                    <form action="{{ route('mahasiswa.destroy', $Mahasiswa->Nim) }}" method="POST"> <a class="btn btn-info"
-                            href="{{ route('mahasiswa.show', $Mahasiswa->Nim) }}">Show</a> <a class="btn btn-primary"
+                    <form action="{{ route('mahasiswa.destroy', $Mahasiswa->Nim) }}" method="POST"> <a class="btn btn-info mt-3"
+                            href="{{ route('mahasiswa.show', $Mahasiswa->Nim) }}">Show</a> <a class="btn btn-primary mt-3"
                             href="{{ route('mahasiswa.edit', $Mahasiswa->Nim) }}">Edit</a> @csrf
-                        @method('DELETE') <button type="submit" class="btn btn-danger">Delete</button> 
+                        @method('DELETE') <button type="submit" class="btn btn-danger mt-3">Delete</button> 
                         <a class="btn btn-primary mt-3" href="{{ route('mahasiswa.khs', $Mahasiswa->Nim) }}">Nilai</a>
                         </form>
                 </td>

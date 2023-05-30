@@ -18,6 +18,11 @@
                                 class="form-control" id="Nim" aria-describedby="Nim"> </div>
                         <div class="form-group"> <label for="Nama">Nama</label> <input type="Nama" name="Nama"
                                 class="form-control" id="Nama" aria-describedby="Nama"> </div>
+                        <div class="form-group">
+                            <label for="foto">Foto</label>
+                            <input type="file" name="foto" class="form-control" id="foto" aria-describedby="foto"
+                                accept="image/*">
+                        </div>
                         <div class="form-group"> 
                         <label for="Kelas">Kelas</label> 
                         <select name="Kelas" class="form-control">
