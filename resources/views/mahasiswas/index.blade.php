@@ -47,7 +47,9 @@
                     <form action="{{ route('mahasiswa.destroy', $Mahasiswa->Nim) }}" method="POST"> <a class="btn btn-info"
                             href="{{ route('mahasiswa.show', $Mahasiswa->Nim) }}">Show</a> <a class="btn btn-primary"
                             href="{{ route('mahasiswa.edit', $Mahasiswa->Nim) }}">Edit</a> @csrf
-                        @method('DELETE') <button type="submit" class="btn btn-danger">Delete</button> </form>
+                        @method('DELETE') <button type="submit" class="btn btn-danger">Delete</button> 
+                        <a class="btn btn-primary mt-3" href="{{ route('mahasiswa.khs', $Mahasiswa->Nim) }}">Nilai</a>
+                        </form>
                 </td>
             </tr>
         @endforeach

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Mahasiswa;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class MahasiswaController extends Controller
 {
@@ -41,7 +42,7 @@ class MahasiswaController extends Controller
         $request->validate([ 
             'Nim' => 'required', 
             'Nama' => 'required', 
-            'Kelas' => 'required', 
+            'kelas_id' => 'required', 
             'Jurusan' => 'required', 
             'No_Handphone' => 'required', 
             'Email' => 'required',
@@ -136,6 +137,27 @@ class MahasiswaController extends Controller
         $Mahasiswa = Mahasiswa::where('Nim', $Nim)->delete();
         return redirect()->route('mahasiswa.index') 
         -> with('success', 'Mahasiswa Berhasil Dihapus');
+    }
+
+    public function khs(Mahasiswa $mahasiswa)
+    {
+        $matkuls = $mahasiswa->matakuliah;
+
+
+        return view('mahasiswas.khs', [
+            'matkuls' => $matkuls,
+            'mahasiswa' => $mahasiswa
+        ]);
+    }
+
+    public function cetak_khs(Mahasiswa $mahasiswa)
+    {
+        $matkuls = $mahasiswa->matakuliah;
+        $pdf = pdf::loadview('mahasiswas.cetak_khs', [
+            'matkuls' => $matkuls,
+            'mahasiswa' => $mahasiswa,
+        ]);
+        return $pdf->stream();
     }
 
     
